@@ -1,0 +1,65 @@
+public class ProjectHandler {
+	List<Project__c> projsList;
+    
+    /*
+     * Constructor.
+     */
+    public ProjectHandler(List<Project__c> triggerProjs) {
+        projsList = triggerProjs;
+    }
+    
+    /*
+     * If a Project is deleted then it should take the oldest StartDate__c from
+     * a SubProject__c. If none exist set the StartDate__c to null on its Site__c.
+     */
+    public void takeOldestStartDate() {
+        List<SubProject__c> allSubProjs = [SELECT id FROM SubProject__c WHERE id != null];
+        
+        if (allSubProjs.size() == 0) { // No other SubProject__c exists after deletion.
+            for (Project__c p : projsList) { // Set StartDate__c on Site__C and Project__c to null.
+                List<Site__c> ste = [SELECT StartDate__c FROM Site__c
+                                     WHERE id =: p.Site__c]; // Get the site.
+                ste[0].StartDate__c = null; // Set Site__c StartDate__c to null.   
+            }
+            
+            return;
+        }
+        
+        Boolean oldestDateFound = false;
+        Date oldestDate = allSubProjs[0].StartDate__c;
+        
+        for (SubProject__c sp : allSubProjs) { // Find the oldest StartDate__c in every SubProject__c.
+            if (sp.StartDate__c < oldestDate) {
+                oldestDate = sp.StartDate__c;
+            }
+        }
+        
+        for (Project__c p : projsList) { // Take the oldest StartDate__c from SubProject__c.
+            p.StartDate__c = oldestDate;
+        }
+    }
+    
+    /*
+     * Increases the Number_of_Projects__c variable on the Site__c of every inserted
+     * Project__c.
+     */
+    public void increaseNumProjs() {
+        for (Project__c p : projsList) { // Iterate through every Project.
+            List<Site__c> ste = [SELECT Number_of_Projects__c FROM Site__c
+                                 WHERE id =: p.Site__c]; // Get the site.
+           	ste[0].Number_of_Projects__c++;
+    	}
+    }
+    
+    /*
+     * Decreases the Number_of_Projects__c variable on the Site__c of every deleted
+     * Project__c.
+     */
+    public void decreaseNumProjs() {
+        for (Project__c p : projsList) { // Iterate through every Project.
+            List<Site__c> ste = [SELECT Number_of_Projects__c FROM Site__c
+                                 WHERE id =: p.Site__c]; // Get the site.
+           	ste[0].Number_of_Projects__c--;
+    	}
+    }
+}

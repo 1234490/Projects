@@ -1,0 +1,28 @@
+trigger SubProjectStartDate on SubProject__c (before insert, before update, after delete) {
+    if (Trigger.isBefore) {
+        if (Trigger.isInsert) { // Challenge requirement 3.
+          SubProjectStartDateHandler handler = new SubProjectStartDateHandler(Trigger.oldMap);
+          handler.checkDates();
+        } else if (Trigger.isUpdate) { // Challenge requirement 3.
+          SubProjectStartDateHandler handler = new SubProjectStartDateHandler(Trigger.oldMap);
+          handler.checkDates();
+        } else if (Trigger.isDelete) {
+          	
+        }
+    } else if (Trigger.isAfter) {
+        if (Trigger.isInsert) {
+          	
+        } else if (Trigger.isUpdate) {
+          	
+        } else if (Trigger.isDelete) { // Challenge requirement 4.
+          	List<SubProject__c> triggerOldList = Trigger.old;
+		  	List<SubProject__c> allSubProjs = [SELECT id FROM SubProject__c
+                                            WHERE id != null];
+          	List<SubProject__c> deletedSubProjs = [SELECT id FROM SubProject__c
+                                             WHERE id IN :triggerOldList
+                                             AND id NOT IN :allSubProjs ALL ROWS];
+          	SubProjectStartDateHandler handler = new SubProjectStartDateHandler(deletedSubProjs);
+            handler.takeOldestStartDate();
+        }
+    }
+}

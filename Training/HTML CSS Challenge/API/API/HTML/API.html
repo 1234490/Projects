@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Call</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/fb73e4db69.js"></script>
+    <link href="../CSS/API.css" rel="stylesheet">
+    <script src="../JavaScript/API.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Major+Mono+Display|Roboto+Mono&display=swap"
+      rel="stylesheet">
+  </head>
+  
+  <body>
+    <h3 id="apod_title"></h3>
+    <img id="apod_img_id" width="250px"/>
+    <p id="apod_explaination"></p>
+    <iframe id="apod_vid_id" type="text/html" width="640" height="385" frameborder="0"></iframe>
+    <p id="copyright"></p>
+    
+    <br/>
+    
+    <form id="requestForm"> <!-- Nothing if date is out of range. -->
+      Request Date:<br><input type="date" name="date" value="" id="date">
+      <br><input type="submit" value="Submit" id="submit">
+    </form>
+  </body>
+</html>

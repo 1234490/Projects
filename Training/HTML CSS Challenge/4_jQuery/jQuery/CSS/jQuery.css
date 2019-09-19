@@ -1,0 +1,46 @@
+/* Common. */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto Mono', monospace;
+  background: linear-gradient(gray, white);
+}
+
+/* Two Lists. */
+.sortableList {
+  list-style-type: none;
+  border: 1px solid black;
+  
+}
+
+#listLeft li {
+  background-color: green;
+  color: black;
+}
+
+#listRight li {
+  background-color: red;
+  color: black;
+}
+
+/* Table. */
+table {
+  margin: 0 auto;
+  width: 100%;
+}
+
+button {
+  margin: 0 auto;
+  padding: 3px;
+}
+
+#dialog {
+  display: none;
+}

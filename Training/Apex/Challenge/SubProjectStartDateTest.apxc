@@ -1,0 +1,121 @@
+@isTest
+public class SubProjectStartDateTest {
+    @isTest public static void checkDatesTest() { // Challenge requirement 3.
+        List<SubProject__c> subProjects = new List<SubProject__c>();
+        
+        // SubProject__c with a null StartDate__c.
+        Site__c s1 = new Site__c();
+        s1.StartDate__c = null;
+        insert s1;
+        
+        Project__c p1 = new Project__c();
+        p1.Site__c = s1.id;
+        p1.StartDate__c = null;
+        insert p1;
+        
+        SubProject__c sp1 = new SubProject__c();
+        sp1.Project__c = p1.id;
+        sp1.StartDate__c = null;
+        subProjects.add(sp1);
+        
+        // SubProject with a non-null StartDate. The StartDate of Site and Project is null.
+        Site__c s2 = new Site__c();
+        s2.StartDate__c = null;
+        insert s2;
+       
+        Project__c p2 = new Project__c();
+        p2.Site__c = s2.id;
+        p2.StartDate__c = null;
+        insert p2;
+        
+        SubProject__c sp2 = new SubProject__c();
+        sp2.Project__c = p2.id;
+        sp2.StartDate__c = Date.newInstance(2019, 5, 2);
+        subProjects.add(sp2);
+        
+        // SubProject with a non-null StartDate. The StartDate of Site and Project is not null.
+		Site__c s3 = new Site__c();
+        s3.StartDate__c = Date.newInstance(2019, 3, 2);
+        insert s3;
+        
+        Project__c p3 = new Project__c();
+        p3.Site__c = s3.id;
+        p3.StartDate__c = Date.newInstance(2019, 4, 2);
+        insert p3;
+        
+        SubProject__c sp3 = new SubProject__c();
+        sp3.Project__c = p3.id;
+        sp3.StartDate__c = Date.newInstance(2019, 5, 2);
+        subProjects.add(sp3);
+        
+        Test.startTest();
+        try {
+            insert subProjects;
+        } catch (Exception ee) {
+            
+        }
+        Test.stopTest();
+    }
+    
+    @isTest public static void takeOldestStartDateTest() { // Challenge requirement 4.
+        // Test where no other SubProject__c exists.
+        Site__c s1 = new Site__c();
+        s1.StartDate__c = Date.newInstance(2019, 3, 2);
+        insert s1;
+       	
+        Project__c p1 = new Project__c();
+        p1.Site__c = s1.id;
+        p1.StartDate__c = Date.newInstance(2019, 4, 2);
+        insert p1;
+        
+        SubProject__c sp1 = new SubProject__c();
+        sp1.Project__c = p1.id;
+        sp1.StartDate__c = Date.newInstance(2019, 5, 2);
+        insert sp1;
+        
+        Test.startTest();
+        try {
+            delete sp1;
+        } catch (Exception ee) {
+            
+        }
+        Test.stopTest();
+        
+        // Test where another SubProject__c exists.
+        Site__c s2 = new Site__c();
+        s2.StartDate__c = Date.newInstance(2019, 3, 2);
+        insert s2;
+       
+        Project__c p2 = new Project__c();
+        p2.Site__c = s2.id;
+        p2.StartDate__c = Date.newInstance(2019, 4, 2);
+        insert p2;
+        
+        SubProject__c sp2 = new SubProject__c();
+        sp2.Project__c = p2.id;
+        sp2.StartDate__c = Date.newInstance(2019, 5, 2);
+        insert sp2;
+        
+        Site__c s3 = new Site__c();
+        s3.StartDate__c = Date.newInstance(2019, 3, 2);
+        insert s3;
+        
+        Project__c p3 = new Project__c();
+        p3.Site__c = s3.id;
+        p3.StartDate__c = Date.newInstance(2019, 4, 2);
+        insert p3;
+        
+        SubProject__c sp3 = new SubProject__c();
+        sp3.Project__c = p3.id;
+        sp3.StartDate__c = Date.newInstance(2018, 5, 2);
+        insert sp3;
+        
+        Test.startTest();
+        try {
+            delete sp2;
+        } catch (Exception ee) {
+            
+        }
+        Test.stopTest();
+    }
+}

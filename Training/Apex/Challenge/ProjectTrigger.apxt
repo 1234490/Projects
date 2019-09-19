@@ -1,0 +1,34 @@
+trigger ProjectTrigger on Project__c (before insert, after delete) {
+	if (Trigger.isBefore) {
+        if (Trigger.isInsert) { // Challenge requirement 5.
+            List<Project__c> triggerOldList = [SELECT id FROM Project__c
+                                               WHERE id != null];
+            List<Project__c> allProjs = Trigger.new;
+            List<Project__c> insertedProjs = [SELECT id FROM Project__c
+                                              WHERE id IN :allProjs
+                                              AND id NOT IN :triggerOldList ALL ROWS];
+            ProjectHandler handler = new ProjectHandler(insertedProjs);
+          	handler.increaseNumProjs();
+        } else if (Trigger.isUpdate) {
+          	
+        } else if (Trigger.isDelete) {
+          	
+        }
+    } else if (Trigger.isAfter) {
+        if (Trigger.isInsert) {
+		  	
+        } else if (Trigger.isUpdate) {
+          	
+        } else if (Trigger.isDelete) { // Challenge requirements 4 and 5.
+          	List<Project__c> triggerOldList = Trigger.old;
+		  	List<Project__c> allProjs = [SELECT id FROM Project__c
+                                         WHERE id != null];
+          	List<Project__c> deletedProjs = [SELECT id FROM Project__c
+                                             WHERE id IN :triggerOldList
+                                             AND id NOT IN :allProjs ALL ROWS];
+          	ProjectHandler handler = new ProjectHandler(deletedProjs);
+            handler.decreaseNumProjs();
+            handler.takeOldestStartDate();
+        }
+    }
+}

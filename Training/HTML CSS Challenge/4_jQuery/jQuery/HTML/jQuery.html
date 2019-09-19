@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://kit.fontawesome.com/fb73e4db69.js"></script>
+    <link href="../CSS/jQuery.css" rel="stylesheet">
+    <script src="../JavaScript/jQuery.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Major+Mono+Display|Roboto+Mono&display=swap"
+      rel="stylesheet">
+  </head>
+  
+  <body>
+    <!-- Two Lists. -->
+    <div class="container-fluid full-width">
+      <div class="row text-center">
+        <div class="col-md-6 p-0">
+          <ul class="sortableList" id="listLeft">
+            <li class="ui-state-default">Item 1</li>
+            <li class="ui-state-default">Item 2</li>
+            <li class="ui-state-default">Item 3</li>
+            <li class="ui-state-default">Item 4</li>
+            <li class="ui-state-default">Item 5</li>
+            <li class="ui-state-default">Item 6</li>
+            <li class="ui-state-default">Item 7</li>
+          </ul>
+          <input name="inputLeft" type="text" value="Test_Left"><br>
+          <button type="button" id="buttonLeft">Add Item</button>
+        </div>
+        <div class="col-md-6 p-0">
+          <ul class="sortableList" id="listRight">
+            <li class="ui-state-default">Item 8</li>
+            <li class="ui-state-default">Item 9</li>
+            <li class="ui-state-default">Item 10</li>
+            <li class="ui-state-default">Item 11</li>
+            <li class="ui-state-default">Item 12</li>
+            <li class="ui-state-default">Item 13</li>
+            <li class="ui-state-default">Item 14</li>
+          </ul>
+          <input name="inputRight" type="text" value="Test_Right"><br>
+          <button type="button" id="buttonRight">Add Item</button>
+        </div>
+      </div>
+      
+      <!-- Table. -->
+      <div class="row text-center">
+        <div class="col-md-12 p-0">
+          <table border="1">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+              </tr>
+            </thead>  
+            <tbody>
+              <tr>
+                <td>Name_1</td>
+                <td>Email_1</td>
+                <td>Password_1</td>
+              </tr>
+              <tr>
+                <td>Name_2</td>
+                <td>Email_2</td>
+                <td>Password_2</td>
+              </tr>
+              <tr>
+                <td>Name_3</td>
+                <td>Email_3</td>
+                <td>Password_3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Dialog. -->
+      <div class="row text-center">
+        <div class="col-md-12 p-0">
+          <button type="button" id="create-new">Create New User</button>
+          <div id="dialog" title="Create New User">
+            <form>
+              Name:<br>
+              <input name="name" type="text" placeholder="Name"><br>
+              Email:<br>
+              <input name="email" type="email" placeholder="Email"><br>
+              Password:<br>
+              <input name="password" type="password"><br>
+              <br>
+              <input type="submit" id="dialog-submit">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

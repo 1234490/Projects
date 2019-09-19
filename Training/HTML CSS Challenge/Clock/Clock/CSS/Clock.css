@@ -1,0 +1,72 @@
+/* Common. */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto Mono', monospace;
+  background: linear-gradient(gray, white);
+}
+
+/* Full Date. */
+#full-date {
+  font-size: 20px;
+  background-color: black;
+  color: white;
+  width: 100%;
+}
+
+/* Calendar. */
+table {
+  width: 100%;
+  border: 2px solid black;
+  background-color: white;
+}
+
+#left-arrow:hover, #right-arrow:hover {
+  background-color: grey;
+}
+
+#left-arrow:hover i, #right-arrow:hover i {
+  animation: arrow-animation 0.5s linear 0s infinite normal;
+}
+
+@keyframes arrow-animation {
+  50% {transform: rotateX(180deg);}
+}
+
+th {
+  border: 1px solid black;
+}
+
+.currentDay {
+  background-color: grey;
+}
+
+
+
+/* Clock. */
+#clock {}
+
+#hour, #minute {
+  position: absolute;
+}
+
+#hour {
+  height: 150px;
+  top: 10.5em;
+  right: 28.7em;
+}
+
+#minute {
+  height: 250px;
+  top: 4em;
+  right: 28.7em;
+}
+
+/* Bottom Clock. */
+#bottom-clock {
+  font-size: 30px;
+}

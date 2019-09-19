@@ -1,0 +1,11 @@
+/* Common. */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto Mono', monospace;
+  background: linear-gradient(gray, white);
+}

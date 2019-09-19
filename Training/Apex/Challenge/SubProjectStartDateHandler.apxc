@@ -1,0 +1,70 @@
+public class SubProjectStartDateHandler {
+    List<SubProject__c> subProjsList;
+    Map<Id, SubProject__c> subProjs;
+    
+    
+    /*
+     * Constructors.
+     */
+    public SubProjectStartDateHandler(List<SubProject__c> triggerSubProjs) {
+        subProjsList = triggerSubProjs;
+    }
+    
+    public SubProjectStartDateHandler(Map<Id, SubProject__c> triggerSubProjs) {
+        subProjs = triggerSubProjs;
+    }
+    
+    /*
+     * If a SubProject__c is deleted then it should take the oldest StartDate__c from
+     * a SubProject__c. If none exist set the StartDate__c to null on its Project__c.
+     */
+    public void takeOldestStartDate() {
+        List<SubProject__c> allSubProjs = [SELECT id FROM SubProject__c WHERE id != null];
+        
+        if (allSubProjs.size() == 0) { // No other SubProject__c exists after deletion.
+            for (SubProject__c sp : subProjsList) { // Set StartDate__c on Site__C and Project__c to null.
+            	List<Project__c> proj = [SELECT StartDate__c, Site__c FROM Project__c
+                                     WHERE id =: sp.Project__c]; // Get the project
+                List<Site__c> ste = [SELECT StartDate__c FROM Site__c
+                                     WHERE id =: proj[0].Site__c]; // Get the site.
+                proj[0].StartDate__c = null; // Set Project__c StartDate__c to null.
+                // ste[0].StartDate__c = null; // Set Site__c StartDate__c to null.   
+            }
+            
+            return;
+        }
+        
+        Boolean oldestDateFound = false;
+        Date oldestDate = allSubProjs[0].StartDate__c;
+        
+        for (SubProject__c sp : allSubProjs) { // Find the oldest StartDate__c in every SubProject__c.
+            if (sp.StartDate__c < oldestDate) {
+                oldestDate = sp.StartDate__c;
+            }
+        }
+        
+        for (SubProject__c sp : subProjsList) { // Take the oldest StartDate__c from SubProject__c.
+            sp.StartDate__c = oldestDate;
+        }
+    }
+    
+    /*
+     * If a SubProject's StartDate is set and those of either its Project or
+     * Site are not, populate them with the former value. 
+     */
+    public void checkDates() {
+        for (SubProject__c sp : subProjs.values()) { // Iterate through every SubProject.
+            if (sp.StartDate__c != null) { // Check if StartDate is set.
+                List<Project__c> proj = [SELECT StartDate__c, Site__c FROM Project__c WHERE
+                                         Id =: sp.Project__c]; // Get the project
+                List<Site__c> ste = [SELECT StartDate__c FROM Site__c WHERE
+                                     Id =: proj[0].Site__c]; // Get the site.
+                // Check if StartDate is null on Project or Site.
+                if (proj[0].StartDate__c == null || ste[0].StartDate__c == null) {
+                    proj[0].StartDate__c = sp.StartDate__c; // Populate into Project.
+                    ste[0].StartDate__c = sp.StartDate__c; // Populate into Site.
+                }
+            }
+    	}
+    }
+}
